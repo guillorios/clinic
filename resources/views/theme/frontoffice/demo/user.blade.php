@@ -1,6 +1,6 @@
 @extends('theme.frontoffice.layouts.main')
 
-@section('title', 'Agendar una cita')
+@section('title', '')
 
 @section('head')
 @endsection
@@ -17,7 +17,7 @@
                 <div class="card">
                     <div class="card-content">
                         <span class="card-title"> @yield('title')</span>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum eveniet, nesciunt autem reiciendis laboriosam, numquam qui veniam sit doloribus natus modi quasi. Temporibus ut optio quo, delectus fugit cumque voluptatem?</p>
+
                     </div>
                 </div>
             </div>

@@ -1,5 +1,5 @@
 <!-- jQuery Library -->
-<script type="text/javascript" src="{{ asset('assets/backoffice/vendors/jquery-3.2.1.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/plugins/jquery-3.4.1.js') }}"></script>
 <!--materialize js-->
 <script type="text/javascript" src="{{ asset('assets/backoffice/js/materialize.min.js') }}"></script>
 <!--scrollbar-->

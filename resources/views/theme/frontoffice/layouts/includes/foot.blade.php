@@ -1,2 +1,7 @@
+{{-- Jquery --}}
+<script src="{{ asset('assets/plugins/jquery-3.4.1.js') }}"></script>
+
 <!--JavaScript at end of body for optimized loading-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="{{ asset('assets/frontoffice/js/materialize.min.js') }}"></script>
+
+@include('sweetalert::alert')

@@ -21,7 +21,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $this->authorize('index',Role::class);
+        $this->authorize('index', Role::class);
 
         return view('theme.backoffice.pages.role.index', [
             'roles' => Role::all(),
@@ -35,7 +35,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        $this->authorize('create',Role::class);
+        $this->authorize('create', Role::class);
 
        return view('theme.backoffice.pages.role.create');
 
@@ -62,7 +62,7 @@ class RoleController extends Controller
      */
     public function show(Role $role)
     {
-        $this->authorize('view',$role);
+        $this->authorize('view', $role);
 
         return view('theme.backoffice.pages.role.show', [
             'role' => $role,

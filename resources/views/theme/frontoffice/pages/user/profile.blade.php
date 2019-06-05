@@ -1,6 +1,6 @@
 @extends('theme.frontoffice.layouts.main')
 
-@section('title', 'Perfil de usuario')
+@section('title', 'Perfil de ' . $user->name)
 
 @section('head')
 @endsection
@@ -17,7 +17,11 @@
                 <div class="card">
                     <div class="card-content">
                         <span class="card-title"> @yield('title')</span>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum eveniet, nesciunt autem reiciendis laboriosam, numquam qui veniam sit doloribus natus modi quasi. Temporibus ut optio quo, delectus fugit cumque voluptatem?</p>
+                        <p><strong>Nombre : </strong> {{ $user->name }}</p>
+                        <p><strong>Edad : </strong> {{ $user->age() }}</p>
+                        <p><strong>Correo : </strong> {{ $user->email }}</p>
+                        <p><strong>Miembro desde : </strong> {{ $user->created_at->diffForHumans() }}</p>
+
                     </div>
                 </div>
             </div>

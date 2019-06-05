@@ -4,17 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Role;
 use App\User;
-use Illuminate\Http\Request;
-use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\UsersImport;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\User\StoreRequest;
 use App\Http\Requests\User\UpdateRequest;
+use App\Http\Requests\User\ChangePasswordRequest;
 
 class UserController extends Controller
 {
 
     public function __construct(){
         $this->middleware('auth');
+        /* $this->middleware('role:' . config('app.admin_role')); */
     }
     /**
      * Display a listing of the resource.
@@ -25,7 +28,7 @@ class UserController extends Controller
     {
         $this->authorize('index', User::class);
         return view('theme.backoffice.pages.user.index', [
-            'users' => User::all(),
+            'users' => auth()->user()->visible_users(),
         ]);
     }
 
@@ -38,7 +41,7 @@ class UserController extends Controller
     {
         $this->authorize('create', User::class);
         return view('theme.backoffice.pages.user.create', [
-            'roles' => Role::all(),
+            'roles' => auth()->user()->visible_roles(),
         ]);
     }
 
@@ -77,7 +80,8 @@ class UserController extends Controller
     public function edit(User $user)
     {
         $this->authorize('update', $user);
-        return view('theme.backoffice.pages.user.edit', [
+        $view = (isset($_GET['view'])) ? $_GET['view'] : null;
+        return view($user->edit_view($view), [
             'user' => $user,
         ]);
     }
@@ -92,7 +96,8 @@ class UserController extends Controller
     public function update(UpdateRequest $request, User $user)
     {
         $user->my_update($request);
-        return redirect()->route('backoffice.user.show', $user);
+        $view = (isset($_GET['view'])) ? $_GET['view'] : null;
+        return redirect()->route($user->user_show($view), $user);
     }
 
     /**
@@ -173,8 +178,24 @@ class UserController extends Controller
     /* Funcion para los perfiles de pacientes */
     public function profile()
     {
-
-        return view('theme.frontoffice.pages.user.profile');
+        $user = auth()->user();
+        return view('theme.frontoffice.pages.user.profile',[
+            'user' => $user,
+        ]);
     }
+
+    public function edit_password(){
+        $this->authorize('update_password', auth()->user());
+        return view('theme.frontoffice.pages.user.edit_password');
+    }
+
+    public function change_password(ChangePasswordRequest $request){
+        $request->user()->password = Hash::make($request->password);
+        $request->user()->save();
+        alert('Exito', 'Contraseña actualizada', 'success');
+        return redirect()->back();
+    }
+
+
 
 }

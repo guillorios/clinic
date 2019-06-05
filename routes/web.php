@@ -31,6 +31,8 @@ Route::group(['middleware'=> ['auth'], 'as' => 'backoffice.'], function(){
 
     Route::resource('user', 'UserController');
 
+    Route::get('patient/{user}/schedule', 'PatientController@back_schedule')->name('patient.schedule');
+
     Route::get('user_import', 'UserController@import')->name('user.import');
     Route::post('user_make_import', 'UserController@make_import')->name('user.make_import');
 
@@ -44,6 +46,17 @@ Route::group(['middleware'=> ['auth'], 'as' => 'backoffice.'], function(){
 });
 
 Route::group(['as' => 'frontoffice.'], function(){
+
     Route::get('profile', 'UserController@profile')->name('user.profile');
-    Route::get('patient/cite', 'PatientController@cite')->name('patient.cite');
+    Route::get('profile/{user}/edit', 'UserController@edit')->name('user.edit');
+    Route::put('profile/{user}/update', 'UserController@update')->name('user.update');
+    Route::get('profile/edit_password', 'UserController@edit_password')->name('user.edit_password');
+    Route::put('profile/change_password', 'UserController@change_password')->name('user.change_password');
+
+    Route::get('patient/schedule', 'PatientController@schedule')->name('patient.schedule');
+    Route::get('patient/appointments', 'PatientController@appointments')->name('patient.appointments');
+    Route::get('patient/prescriptions', 'PatientController@prescriptions')->name('patient.prescriptions');
+    Route::get('patient/invoices', 'PatientController@invoices')->name('patient.invoices');
+
+
 });

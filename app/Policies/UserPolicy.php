@@ -47,7 +47,23 @@ class UserPolicy
     public function update(User $user, User $model)
     {
 
-        return ($user->has_permission('update-user') && $user->has_role(config('app.admin_role'))) || $user->id == $model->id;
+        if($user->id == $model->id){
+            return true;
+        }
+
+        if($user->has_permission('update-user')){
+            if($user->has_role(config('app.admin_role'))){
+                return true;
+            }
+
+            if($user->has_role(config('app.secretary_role')) && $model->has_role(config('app.patient_role'))){
+                return true;
+            }
+        }
+
+        return false;
+
+
     }
 
     /**
@@ -103,5 +119,14 @@ class UserPolicy
 
     public function update_password(User $user, User $model){
         return $user->id == $model->id;
+    }
+
+
+    public function view_appointments_caledar(User $user, User $model){
+        if ($user->has_role(config('app.doctor_role'))) {
+            return $user->id == $model->id;
+        }
+
+        return true;
     }
 }

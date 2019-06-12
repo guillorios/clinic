@@ -48,6 +48,23 @@
                     <span class="nav-text">Usuarios</span>
                 </a>
             </li>
+
+            @if(user()->has_role(config('app.doctor_role')))
+                <li class="bold">
+                    <a href="{{ route('backoffice.doctor.appointments.show', user()->id) }}" class="waves-effect waves-cyan">
+                        <i class="material-icons">schedule</i>
+                        <span class="nav-text">Agenda Doctor</span>
+                    </a>
+                </li>
+            @else
+                <li class="bold">
+                    <a href="{{ route('backoffice.patient.appointments.show') }}" class="waves-effect waves-cyan">
+                        <i class="material-icons">schedule</i>
+                        <span class="nav-text">Agenda</span>
+                    </a>
+                </li>
+            @endif
+
             <li class="bold">
                 <a href="{{ route('backoffice.role.index') }}" class="waves-effect waves-cyan">
                     <i class="material-icons">perm_identity</i>
@@ -58,6 +75,12 @@
                 <a href="{{ route('backoffice.permission.index') }}" class="waves-effect waves-cyan">
                     <i class="material-icons">vpn_key</i>
                     <span class="nav-text">Permisos</span>
+                </a>
+            </li>
+            <li class="bold">
+                <a href="{{ route('backoffice.speciality.index') }}" class="waves-effect waves-cyan">
+                    <i class="material-icons">device_hub</i>
+                    <span class="nav-text">Especialidades</span>
                 </a>
             </li>
         </ul>

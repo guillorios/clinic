@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Role;
 use App\User;
+use App\Speciality;
 use App\Imports\UsersImport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -154,6 +155,24 @@ class UserController extends Controller
         alert('Exito', 'Permisos asignados', 'success');
         return redirect()->route('backoffice.user.show', $user);
 
+    }
+
+
+    /* Mostrar formulario para asignar especialidades */
+
+    public function assign_speciality(User $user){
+        return view('theme.backoffice.pages.user.assign_speciality', [
+            'user' => $user,
+            'specialities' => Speciality::all(),
+        ]);
+    }
+
+    /* Asignar las especialidades a los usuarios */
+
+    public function speciality_assignment(Request $request, User $user){
+        $user->specialities()->sync($request->specialities);
+        alert('Exito', 'Especialidades asigandas', 'success');
+        return redirect()->route('backoffice.user.show', $user);
     }
 
     /* Mostrar formulario para importar los usuarios */
